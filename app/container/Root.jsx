@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ItemAction, AddToCartAction} from "../actions/ItemActions";
+import {ItemAction} from "../actions/ItemAction";
+import {AddToCartAction} from "../actions/OrderAction";
 import {ItemsList} from "../components/ItemsList";
 import _ from 'underscore';
 
