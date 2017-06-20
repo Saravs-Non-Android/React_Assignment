@@ -1,38 +1,4 @@
-// const gulp = require('gulp');
-// const babel = require('gulp-babel');
-// const browserify = require("browserify");
-// const reactify = require("reactify");
-// const source = require("vinyl-source-stream");
-// gulp.task("bundle", function() {
-//     gulp.src('./app/main.jsx')
-//         .pipe(babel({
-//             presets: ['react', 'es2015', 'stage-2']
-//         }))
-//         .pipe(gulp.dest('app/dist'));
-//     // return browserify({
-//     //         entries: "./app/main.jsx",
-//     //         debug: true
-//     //     }).transform(reactify)
-//     //     .bundle()
-//     //     .pipe(babel({
-//     //         presets: ['react', 'es2015', 'stage-2']
-//     //     }))
-//     //     .pipe(source("main.js"))
-//     //     .pipe(gulp.dest("app/dist"))
-// });
-
-// gulp.task("copy", ["bundle"], function() {
-//     return gulp.src(["app/index.html", "app/lib/bootstrap-css/css/bootstrap.min.css", "app/lib/font-awesome/css/font-awesome.min.css", "app/lib/static/**/*", "app/lib/font-awesome/**/*", "app/style.css"])
-//         .pipe(gulp.dest("app/dist"));
-// });
-
-// gulp.task("default", ["copy"], function() {
-//     console.log("Gulp completed...");
-// });
-
-
 'use strict';
-
 const gulp = require('gulp');  // Base gulp package
 const babelify = require('babelify'); // Used to convert ES6 & JSX to ES5
 const browserify = require('browserify'); // Providers "require" support, CommonJS

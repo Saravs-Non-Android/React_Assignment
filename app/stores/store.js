@@ -5,5 +5,5 @@ import listReducer from "../reducers/listReducer";
 
 export default createStore(
 	listReducer,
-    applyMiddleware(thunk, logger())
+  applyMiddleware(thunk, logger())
 );

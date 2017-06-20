@@ -20,6 +20,6 @@
   ],
   "dependencies": {
     "bootstrap-css": "^3.3.7",
-    "font-awesome-sass": "^4.7.0",
+    "font-awesome-sass": "^4.7.0"
   }
 }
