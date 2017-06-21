@@ -45,7 +45,7 @@ function mapError(err) {
 function bundle(bundler) {
   let bundleTimer = duration('Javascript bundle time');
 
-  bundler
+  return bundler
     .bundle()
     .on('error', mapError) // Map error reporting
     .pipe(source('main.jsx')) // Set source name
@@ -67,16 +67,16 @@ gulp.task("copy", function() {
 });
 // Gulp task for build
 gulp.task('default',  ["copy"],function() {
-  livereload.listen(); // Start livereload server
+  //livereload.listen(); // Start livereload server
   let args = merge(watchify.args, { debug: true }); // Merge in default watchify args with browserify arguments
 
   let bundler = browserify(config.js.src, args) // Browserify
-    .plugin(watchify, {ignoreWatch: ['**/node_modules/**', '**/bower_components/**']}) // Watchify to watch source file changes
+    //.plugin(watchify, {ignoreWatch: ['**/node_modules/**', '**/bower_components/**']}) // Watchify to watch source file changes
     .transform(babelify, {presets: ['es2015', 'react', 'stage-2']}); // Babel tranforms
 
   bundle(bundler); // Run the bundle the first time (required for Watchify to kick in)
 
-  bundler.on('update', function() {
-    bundle(bundler); // Re-run bundle on source updates
-  });
+  // bundler.on('update', function() {
+  //   bundle(bundler); // Re-run bundle on source updates
+  // });
 });

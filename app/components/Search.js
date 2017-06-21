@@ -11,6 +11,7 @@ class Search extends React.Component {
       cuisine: "",
       budget: "",
       sortBy: "",
+      loading:true
     }
   }
 

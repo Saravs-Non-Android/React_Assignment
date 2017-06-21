@@ -10,7 +10,8 @@ export function AddToCartAction(cartData) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({"_id": cartData})
-    }).then(response => {
+    })
+    .then(response => {
       if (response.status >= 200 && response.status < 300) {
         return response.statusText;
       } else {

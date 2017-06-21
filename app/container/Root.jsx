@@ -5,14 +5,34 @@ import {AddToCartAction} from "../actions/OrderAction";
 import {ItemsList} from "../components/ItemsList";
 import _ from 'underscore';
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    ItemAction: () => {
+      return dispatch(ItemAction());
+    },
+
+    AddToCartAction: (cartData) => {
+      return dispatch(AddToCartAction(cartData));
+    }
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {items: state.items, message: state.message}
+};
+
 class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedValue: []
+      checkedValue: [],
+      loading: true
+
     }
     this.props.ItemAction();
-    //this.addToCart = this.addToCart.bind(this);
+  }
+  componentDidUpdate() {
+    setTimeout(() => this.setState({loading: false}), 500);
   }
 
   addToCart = (id, name, isChecked) => {
@@ -27,41 +47,31 @@ class Root extends React.Component {
   }
 
   handleSubmit = () => {
-    if (!_.isEmpty(this.state.checkedValue)){
-      this.props.AddToCartAction(this.state.checkedValue);
-      if(this.props.message && this.props.message == 'OK'){
-        alert("Below Restaurant Order created successfully" +"\n" + this.state.checkedValue.map(
-          function(i){
+    if (!_.isEmpty(this.state.checkedValue)) {
+      this.props.AddToCartAction(this.state.checkedValue).then((response) => {
+        if (response.payload === 'OK') {
+          alert("Below Restaurant Order created successfully" +
+            "\n" + this.state.checkedValue.map(function(i) {
             return i.split("-")[1]
-          })
-        );
-      }
-    }
-    else{
+          }));
+        } else {
+          alert("Something went wrong", payload);
+        }
+      }).catch(error => {
+        alert("Something went wrong", error);
+      });
+    } else {
       alert('Please select at least one item');
     }
   }
 
   render() {
+    const {loading} = this.state;
+
+    if (loading) {
+      return null; // render null when app is not ready
+    }
     return (<ItemsList items={this.props.items} handleSubmit={this.handleSubmit} addToCart={this.addToCart}/>);
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    ItemAction: () => {
-      dispatch(ItemAction());
-    },
-
-    AddToCartAction: (cartData) => {
-      dispatch(AddToCartAction(cartData));
-    }
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    items: state.items,
-    message:state.message
-  }
-};
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
