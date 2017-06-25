@@ -1,6 +1,15 @@
+/**
+ * Created by Mohan Rathour on 19/06/17.
+ */
 import fetch from 'isomorphic-fetch';
 import {RESOURCE_URL, SEARCH_DATA} from '../constants/ActionTypes';
 
+/**
+ * Search action to send data from action to your store, When action will dispatch,the state will update immediately.
+ * It will hit the Get 'Restaurants' rest api to get restaurants data on to the basis of filters.
+ * @returns {function(*)}
+ * @constructor
+ */
 export function SearchItems(searchParams) {
   return dispatch => {
     let filter = {};

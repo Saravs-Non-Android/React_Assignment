@@ -1,8 +1,18 @@
+/**
+ * Created by Mohan Rathour on 18/06/17.
+ */
 import React from "react";
 import {connect} from "react-redux";
 import {SearchItems} from "../actions/SearchAction";
 
+/**
+ * Search Item Class
+ */
 class Search extends React.Component {
+  /**
+   * Constructor
+   * @param props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -15,22 +25,38 @@ class Search extends React.Component {
     }
   }
 
+  /**
+   * Search restaurant on the basis of search text.
+   * @param event
+   */
   search = (event) => {
     event.preventDefault();
     this.props.SearchItems(this.state);
   }
 
+  /**
+   * Set the search text data into the state object
+   * @param event
+   */
   searchByText = (event) => {
     this.state[event.target.name] = event.target.value;
     this.setState(this.state);
   }
 
+  /**
+   * Filter the restaurant search data on to the basis of different filter.
+   * @param event
+   */
   filter = (event) => {
     this.state[event.target.name] = event.target.value;
     this.setState(this.state);
     this.props.SearchItems(this.state);
   }
 
+  /**
+   * Render the Search filter options.
+   * @returns {XML}
+   */
   render() {
     return (
       <div className="row">
@@ -106,6 +132,11 @@ class Search extends React.Component {
   }
 }
 
+/**
+ * Call the Search action function with search data.
+ * @param dispatch
+ * @returns {{SearchItems: (function(*=))}}
+ */
 const mapDispatchToProps = (dispatch) => {
   return {
     SearchItems: (formData) => {
@@ -114,9 +145,17 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+/**
+ * Get the restaurant data from reducer.
+ * @param state
+ * @returns {{items: (*|string|DataTransferItemList)}}
+ */
 const mapStateToProps = (state) => {
   return {
     items: state.items
   }
 };
+/**
+ * attach  both Reducer and Action into the Search component.
+ */
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

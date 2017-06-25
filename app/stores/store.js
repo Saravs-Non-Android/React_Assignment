@@ -1,8 +1,13 @@
+/**
+ * Created by Mohan Rathour on 18/06/17.
+ */
 import {createStore, combineReducers, applyMiddleware} from "redux";
-import logger from "redux-logger";
 import thunk from "redux-thunk";
 import listReducer from "../reducers/listReducer";
 
+/**
+ * Create the store and attach the reducer and middleware to the redux store.
+ */
 export default createStore(
 	listReducer,
   applyMiddleware(thunk, logger())

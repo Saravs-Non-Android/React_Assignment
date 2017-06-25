@@ -1,3 +1,6 @@
+/**
+ * Created by Mohan Rathour on 18/06/17.
+ */
 import React from "react";
 import {connect} from "react-redux";
 import {ItemAction} from "../actions/ItemAction";
@@ -5,6 +8,11 @@ import {AddToCartAction} from "../actions/OrderAction";
 import {ItemsList} from "../components/ItemsList";
 import _ from 'underscore';
 
+/**
+ * Call the Item action function.
+ * @param dispatch
+ * @returns {{ItemAction: (function()), AddToCartAction: (function(*=))}}
+ */
 const mapDispatchToProps = (dispatch) => {
   return {
     ItemAction: () => {
@@ -17,11 +25,23 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+/**
+ * Get the restaurant data and order success message from reducer.
+ * @param state
+ * @returns {{items: (*|string|DataTransferItemList), message}}
+ */
 const mapStateToProps = (state) => {
   return {items: state.items, message: state.message}
 };
 
+/**
+ * Root Class
+ */
 class Root extends React.Component {
+  /**
+   * Constructor
+   * @param props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -29,12 +49,25 @@ class Root extends React.Component {
       loading: true
 
     }
+    /**
+     * Call ItemAction Action function.
+     */
     this.props.ItemAction();
   }
+
+  /**
+   * Set the loading false When DOM update
+   */
   componentDidUpdate() {
     setTimeout(() => this.setState({loading: false}), 500);
   }
 
+  /**
+   * add the order into the AddToCart
+   * @param id
+   * @param name
+   * @param isChecked
+   */
   addToCart = (id, name, isChecked) => {
     if (isChecked) {
       this.state.checkedValue.push(id + "-" + name)
@@ -46,6 +79,9 @@ class Root extends React.Component {
     }
   }
 
+  /**
+   * Handle the order submit action
+   */
   handleSubmit = () => {
     if (!_.isEmpty(this.state.checkedValue)) {
       this.props.AddToCartAction(this.state.checkedValue).then((response) => {
@@ -65,6 +101,10 @@ class Root extends React.Component {
     }
   }
 
+  /**
+   * Render the restaurant list data
+   * @returns {*}
+   */
   render() {
     const {loading} = this.state;
 
@@ -74,4 +114,8 @@ class Root extends React.Component {
     return (<ItemsList items={this.props.items} handleSubmit={this.handleSubmit} addToCart={this.addToCart}/>);
   }
 }
+
+/**
+ * attach  both Reducer and Action into the Root Container.
+ */
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

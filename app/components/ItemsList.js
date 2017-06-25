@@ -1,7 +1,15 @@
+/**
+ * Created by Mohan Rathour on 18/06/17.
+ */
 import React from "react";
 import ItemInfo from "./ItemInfo";
 import Search from "./Search";
-
+/**
+ * Render the Restaurant list data
+ * @param props
+ * @returns {XML}
+ * @constructor
+ */
 export const ItemsList = (props) => {
   return (
     <div className="row">

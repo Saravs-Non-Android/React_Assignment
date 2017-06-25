@@ -1,7 +1,19 @@
+/**
+ * Created by Mohan Rathour on 18/06/17.
+ */
 import React from "react";
 import {connect} from "react-redux"
-//import AddSearch from "../actions/ItemActions";
+
+/**
+ * ItemInfo Class
+ *
+ */
 class ItemInfo extends React.Component {
+
+  /**
+   * Constructor
+   * @param props
+   */
   constructor(props) {
       super(props);
       this.state ={
@@ -10,6 +22,12 @@ class ItemInfo extends React.Component {
       }
   }
 
+  /**
+   * Select the item for order
+   * @param e
+   * @param id
+   * @param name
+   */
   selectItem = (e, id, name) => {
     this.setState({
       [e.target.name]: !this.state[e.target.name]
@@ -17,8 +35,13 @@ class ItemInfo extends React.Component {
     let item = !this.state[e.target.name];
     this.props.addToCart(id, name, item);
   }
+
+  /**
+   * Render the item information into the DOM
+   * @returns {XML}
+   */
   render() {
-       let {info, handleSubmit} = this.props;
+       let {info} = this.props;
        return (
          <div className="col-sm-6">
              <div className="item-simple">

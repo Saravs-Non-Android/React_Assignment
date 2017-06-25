@@ -1,6 +1,15 @@
+/**
+ * Created by Mohan Rathour on 19/06/17.
+ */
 import fetch from 'isomorphic-fetch';
 import {RESOURCE_URL, ORDER_DATA} from '../constants/ActionTypes';
 
+/**
+ * Order action to send data from action to your store, When action will dispatch,the state will update immediately.
+ * It will hit the Post 'order' rest api to make an order
+ * @returns {function(*)}
+ * @constructor
+ */
 export function AddToCartAction(cartData) {
   return dispatch => {
     return fetch(RESOURCE_URL + '/order', {
