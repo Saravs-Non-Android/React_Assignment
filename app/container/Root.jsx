@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import {ItemAction} from "../actions/ItemAction";
 import {AddToCartAction} from "../actions/OrderAction";
 import {ItemsList} from "../components/ItemsList";
+import {SearchItems} from "../actions/SearchAction";
+
 import _ from 'underscore';
 
 /**
@@ -21,6 +23,10 @@ const mapDispatchToProps = (dispatch) => {
 
     AddToCartAction: (cartData) => {
       return dispatch(AddToCartAction(cartData));
+    },
+
+    SearchItems: (formData) => {
+      dispatch(SearchItems(formData));
     }
   };
 };
@@ -46,21 +52,54 @@ class Root extends React.Component {
     super(props);
     this.state = {
       checkedValue: [],
-      loading: true
-
-    }
+      loading: true,
+      isChecked: [],
+      name: "",
+      city: "",
+      cuisine: "",
+      budget: "",
+      sortBy: "",
+    };
     /**
      * Call ItemAction Action function.
      */
     this.props.ItemAction();
-  }
+  };
+
+  /**
+   * Search restaurant on the basis of search text.
+   * @param event
+   */
+  search = (event) => {
+    event.preventDefault();
+    this.props.SearchItems(this.state);
+  };
+
+  /**
+   * Set the search text data into the state object
+   * @param event
+   */
+  searchByText = (event) => {
+    this.state[event.target.name] = event.target.value;
+    this.setState(this.state);
+  };
+
+  /**
+   * Filter the restaurant search data on to the basis of different filter.
+   * @param event
+   */
+  filter = (event) => {
+    this.state[event.target.name] = event.target.value;
+    this.setState(this.state);
+    this.props.SearchItems(this.state);
+  };
 
   /**
    * Set the loading false When DOM update
    */
   componentDidUpdate() {
     setTimeout(() => this.setState({loading: false}), 500);
-  }
+  };
 
   /**
    * add the order into the AddToCart
@@ -77,7 +116,22 @@ class Root extends React.Component {
         this.state.checkedValue.splice(index, 1);
       }
     }
-  }
+  };
+
+  /**
+   * Select the item for order
+   * @param e
+   * @param id
+   * @param name
+   */
+  selectItem = (e, id, name, key) => {
+    let isChecked = this.state.isChecked;
+    isChecked[key] = !!isChecked[key] ? false : true;
+    this.setState({
+      isChecked
+    });
+    this.addToCart(id, name, isChecked[key]);
+  };
 
   /**
    * Handle the order submit action
@@ -90,16 +144,14 @@ class Root extends React.Component {
             "\n" + this.state.checkedValue.map(function(i) {
             return i.split("-")[1]
           }));
-        } else {
-          alert("Something went wrong", payload);
-        }
+        } else alert("Something went wrong \n"+ payload);
       }).catch(error => {
-        alert("Something went wrong", error);
+        alert("Something went wrong \n" + error);
       });
     } else {
       alert('Please select at least one item');
     }
-  }
+  };
 
   /**
    * Render the restaurant list data
@@ -111,7 +163,15 @@ class Root extends React.Component {
     if (loading) {
       return null; // render null when app is not ready
     }
-    return (<ItemsList items={this.props.items} handleSubmit={this.handleSubmit} addToCart={this.addToCart}/>);
+    return (<ItemsList
+              items={this.props.items}
+              handleSubmit={this.handleSubmit}
+              search={this.search}
+              searchByText={this.searchByText}
+              filter={this.filter}
+              state={this.state}
+              selectItem={this.selectItem}
+            />);
   }
 }
 
