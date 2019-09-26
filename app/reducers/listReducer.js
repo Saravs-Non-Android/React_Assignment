@@ -7,7 +7,7 @@
  * @type {{items: string, message: string}}
  */
 let initialState = {
-  items: "",
+  items: [],
   message: ""
 }
 
@@ -21,7 +21,11 @@ const listReducer = (state = initialState, action) => {
   switch (action.type) {
     case "Item_Data":
       //TODO- 13 Handle the Item_Data, Order_Data action and return the response from reducer similar like Search_Data
-      break;
+		state = {
+			...state,
+			items : action.payload
+		}
+	  break;
     case "Order_Data":
       //TODO- 13 Handle the Item_Data, Order_Data action and return the response from reducer similar like Search_Data
     case "Search_Data":

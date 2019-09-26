@@ -11,7 +11,7 @@ export const ItemInfo = (props) => {
   return (
       <div className="col-sm-6">
         <div className="item-simple">
-          <input type="checkbox" name="isChecked" checked={isChecked[keyIndex]} id="menuItem"
+          <input type="checkbox" name="isChecked" checked={props.isChecked[props.keyIndex]} id="menuItem"
                  className="messageCheckbox" onChange={(e) => selectItem(e, info._id, info.name, keyIndex)}/>
           <div className="item-simple-content">
             <div className="item-detail col-sm-4">
