@@ -18,23 +18,7 @@ export function SearchItems(searchParams) {
     searchParams.cuisine ? (filter['category'] = [searchParams.cuisine.trim()]) : [];
     searchParams.sortBy ? (filter['sort'] = searchParams.sortBy.trim()) : 'asc';
     searchParams.budget ? (filter['amount'] = searchParams.budget.trim()) : '';
+    // TODO-8.1- > Call the search filter api  with the help of fetch module call that is given below into the TODO section and return the promise object as similar to other Action call.
 
-    return fetch(RESOURCE_URL + '/search?filter=' + JSON.stringify(filter), {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      if (response.status >= 200 && response.status < 300) {
-        return response.json();
-      } else {
-        const error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-      }
-    }).then(json => dispatch({type: SEARCH_DATA, payload: json.restaurant})).catch(error => {
-      console.log('request failed', error);
-    });
   }
 }
