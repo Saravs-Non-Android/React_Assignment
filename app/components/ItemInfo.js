@@ -7,6 +7,7 @@ import React from "react";
  */
 export const ItemInfo = (props) => {
   // TODO-3 Get the info from props and display then display all the information for restaurant like name and image url.
+  let info = props.info;
   return (
       <div className="col-sm-6">
         <div className="item-simple">

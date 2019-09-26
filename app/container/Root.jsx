@@ -38,7 +38,15 @@ const mapDispatchToProps = (dispatch) => {
  */
 const mapStateToProps = (state) => {
   //TODO-4  : TODO-4 attach the  props(items , message) and dispatcher to Search component.
-
+	if (state.items.length > 0) {
+		return {
+			items: state.items,
+		};
+	} else {
+		return {
+			items: [],
+		}
+	}
 };
 
 /**
@@ -144,15 +152,18 @@ class Root extends React.Component {
     if (loading) {
       return null; // render null when app is not ready
     }
-    return (<ItemsList
-              items={this.props.items}
-              handleSubmit={this.handleSubmit}
-              search={this.search}
-              searchByText={this.searchByText}
-              filter={this.filter}
-              state={this.state}
-              selectItem={this.selectItem}
-            />);
+
+    return (
+		<ItemsList
+				items={this.props.items}
+				handleSubmit={this.handleSubmit}
+				search={this.search}
+				searchByText={this.searchByText}
+				filter={this.filter}
+				state={this.state}
+				selectItem={this.selectItem}
+				/>
+	);
   }
 }
 
