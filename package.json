@@ -31,7 +31,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jade": "^1.11.0",
     "jquery": "^3.2.1",
-    "mongoose": "^4.9.2",
+    "mongoose": "^5.7.8",
     "q": "^1.5.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
